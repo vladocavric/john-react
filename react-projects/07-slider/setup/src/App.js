@@ -5,7 +5,7 @@ import data from './data';
 function App() {
 	const [reviews] = useState(data);
 	const [selectedIdex, setSelectedIdex] = useState(0);
-	const { image, name, title, quote } = reviews[selectedIdex];
+	// const { image, name, title, quote } = reviews[selectedIdex];
 	const handlePrev = () => {
 		setSelectedIdex((prevState) => {
 			if (prevState === 0) {
@@ -26,7 +26,7 @@ function App() {
 	useEffect(() => {
 		const time = setTimeout(() => {
 			handleNext();
-		}, 5000);
+		}, 10000);
 		return () => {
 			clearTimeout(time);
 		};
@@ -44,13 +44,30 @@ function App() {
 					onClick={handlePrev}
 					style={{ zIndex: 100 }}
 				/>
-				<article>
-					<img src={image} alt={name} className='person-img' />
-					<h4>{name}</h4>
-					<div className='title'>{title}</div>
-					<div className='text'>{quote}</div>
-					<FaQuoteRight className='icon' />
-				</article>
+				{reviews.map((rew, index) => {
+					const { id, image, name, title, quote } = rew;
+					let position = 'nextSlide';
+					if (index === selectedIdex) position = 'activeSlide';
+					if (
+						index === selectedIdex - 1 ||
+						(selectedIdex === 0 && index === reviews.length - 1)
+					)
+						position = 'lastSlide';
+					return (
+						<article key={id} className={position}>
+							<img
+								src={image}
+								alt={name}
+								className='person-img'
+							/>
+							<h4>{name}</h4>
+							<div className='title'>{title}</div>
+							<div className='text'>{quote}</div>
+							<FaQuoteRight className='icon' />
+						</article>
+					);
+				})}
+
 				<FiChevronRight className='next' onClick={handleNext} />
 			</div>
 		</section>
