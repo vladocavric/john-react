@@ -202,10 +202,9 @@ input.error {
   color: var(--clr-grey-1);
   margin-bottom: 0;
 }
+.color-light .alert,
+.color-light .percent-value,
 .color-light .color-value {
-  color: var(--clr-white);
-}
-.color-light .percent-value {
   color: var(--clr-white);
 }
 
