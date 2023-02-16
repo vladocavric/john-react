@@ -17,6 +17,8 @@ const Navbar = () => {
       closeSubmenu();
     }
   };
+
+
   return (
     <nav className='nav' onMouseOver={handleSubmenu}>
       <div className='nav-center'>

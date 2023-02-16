@@ -1,11 +1,15 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import Modal from './Modal'
 import Sidebar from './Sidebar'
 import Home from './Home'
+import GeneralContext from './context'
 function App() {
+  const {showModal, modalToggle} = useContext(GeneralContext);
   return (
     <>
-      <h2>modal-sidebar project setup</h2>
+      {showModal && <Modal onClose={modalToggle}><h2>Modal content</h2></Modal>}
+      <Home />
+      <Sidebar />
     </>
   )
 }

@@ -6,8 +6,8 @@ function App() {
 	const [alert, setAlert] = useState({});
 	const [items, setItems] = useState([]);
 	const [enteredItem, setEnteredItem] = useState('');
-  const [editMode, setEditMode] = useState(false);
-  const [editedItemIndex, setEditedItemIndex] = useState(null);
+	const [editMode, setEditMode] = useState(false);
+	const [editedItemIndex, setEditedItemIndex] = useState(null);
 
 	const handleChange = (e) => {
 		setEnteredItem(e.target.value);
@@ -15,31 +15,35 @@ function App() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-    if (editMode) {
-      const allItems = [...items]
-      allItems.splice(editedItemIndex, 1, enteredItem)
-      setItems(allItems)
-      setAlert({ type: 'success', text: 'grocery edited' })
-      setEditMode(false)
-    } else {
-      setItems((prevState) => [...prevState, enteredItem]);
-      setAlert({ type: 'success', text: 'grocery added to list' });
-    }
-    setEnteredItem('');
+		enteredItem.trim();
+		if (enteredItem === '' || !enteredItem.trim()) {
+			return;
+		}
+		if (editMode) {
+			const allItems = [...items];
+			allItems.splice(editedItemIndex, 1, enteredItem);
+			setItems(allItems);
+			setAlert({ type: 'success', text: 'grocery edited' });
+			setEditMode(false);
+		} else {
+			setItems((prevState) => [...prevState, enteredItem]);
+			setAlert({ type: 'success', text: 'grocery added to list' });
+		}
+		setEnteredItem('');
 	};
 
 	const handleDelete = (index) => {
 		const allItems = [...items];
 		allItems.splice(index, 1);
 		setItems([...allItems]);
-    setAlert({ type: 'delete', text: 'grocery was deleted from the list' });
+		setAlert({ type: 'delete', text: 'grocery was deleted from the list' });
 	};
 
 	const handleEdit = (index) => {
-    setEditMode(true)
-    setEditedItemIndex(index)
-    setEnteredItem(items[index])
-  };
+		setEditMode(true);
+		setEditedItemIndex(index);
+		setEnteredItem(items[index]);
+	};
 
 	const handleClearAll = () => {
 		setItems([]);
@@ -82,7 +86,9 @@ function App() {
 						onChange={handleChange}
 						value={enteredItem}
 					/>
-					<button className='submit-btn'>{editMode ? 'Edit' : 'Submit'}</button>
+					<button className='submit-btn'>
+						{editMode ? 'Edit' : 'Submit'}
+					</button>
 				</div>
 			</form>
 
