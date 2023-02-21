@@ -7,12 +7,12 @@ const reducer = (currentState, action) => {
 		case 'ADD_ITEM':
 			return {};
 		case 'INCREASE_ITEM':
-			const newCart = currentState.cart.map(item => {
-				if(item.id === action.id) {
-					item.amount += 1
+			const newCart = currentState.cart.map((item) => {
+				if (item.id === action.id) {
+					item.amount += 1;
 				}
-				return item
-			})
+				return item;
+			});
 			return {
 				...currentState,
 				cart: newCart,
@@ -29,13 +29,28 @@ const reducer = (currentState, action) => {
 			return {
 				...currentState,
 				cart: [...restOfItems],
-				amount: currentState - item.amount,
 			};
 		case 'CLEAR_CART':
 			return { ...currentState, cart: [], amount: 0, total: 0 };
-		case 'GET_TOTAL':
-			const newTotal = currentState.cart.map(item => item.amount * item.price).reduce((a, b) => (a + b), 0)
-			return { ...currentState, total: newTotal };
+		case 'LOADING':
+			return { ...currentState, loading: true };
+		case 'DISPLAY_DATA':
+			return { ...currentState, loading: false, cart: [...action.data] };
+		case 'GET_TOTALS':
+			// const newTotal = currentState.cart.map(item => item.amount * item.price).reduce((a, b) => (a + b), 0)
+			// return { ...currentState, total: newTotal };
+			let { total, amount } = currentState.cart.reduce(
+				(cartTotal, cartItem) => {
+					const { price, amount } = cartItem;
+					const itemTotal = price * amount;
+					cartTotal.total += itemTotal;
+					cartTotal.amount += amount;
+					return cartTotal;
+				},
+				{ total: 0, amount: 0 }
+			);
+			total = parseFloat(total.toFixed(2));
+			return { ...currentState, total, amount };
 		default:
 			return { ...currentState };
 	}

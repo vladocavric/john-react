@@ -1,5 +1,4 @@
-import React, { useState, useContext, useReducer, useEffect } from 'react';
-import cartItems from './data';
+import React, { useContext, useReducer, useEffect } from 'react';
 import reducer from './reducer';
 // ATTENTION!!!!!!!!!!
 // I SWITCHED TO PERMANENT DOMAIN
@@ -15,7 +14,7 @@ const AppContext = React.createContext({
 });
 
 const initialState = {
-	cart: cartItems,
+	cart: [],
 	loading: false,
 	total: 0,
 	amount: 0,
@@ -42,9 +41,20 @@ const AppProvider = ({ children }) => {
 		dispatch({ type: 'CLEAR_CART' });
 	};
 
-  useEffect(() => {
-   dispatch({type: 'GET_TOTAL'})
-  }, [state.cart]);
+	const fetchData = async () => {
+		dispatch({ type: 'LOADING' });
+		const response = await fetch(url);
+		const data = await response.json();
+		dispatch({ type: 'DISPLAY_DATA', data });
+	};
+
+	useEffect(() => {
+		fetchData();
+	}, []);
+
+	useEffect(() => {
+		dispatch({ type: 'GET_TOTALS' });
+	}, [state.cart]);
 
 	return (
 		<AppContext.Provider
