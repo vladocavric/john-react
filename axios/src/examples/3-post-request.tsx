@@ -6,9 +6,19 @@ const PostRequest = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<EventTarget>) => {
     e.preventDefault();
     console.log(name, email);
+    try {
+      const response = await axios.post(url, {
+        name, 
+        email
+      })
+
+      console.log(response)
+    } catch (err: any) {
+      throw new Error(err.message)
+    }
   };
 
   return (
