@@ -162,7 +162,8 @@ Navbar
   padding: 0.25rem 0.5rem;
   transition: var(--mainTransition);
 }
-.nav-links a:hover {
+.nav-links a:hover,
+.nav-links a.active {
   color: var(--primaryColor);
 }
 .logo {
@@ -177,6 +178,11 @@ About
   width: var(--smallWidth);
   max-width: var(--maxWidth);
   margin: 0 auto;
+}
+
+.about-section h2 {
+  text-align: center;
+  margin-top: 100px;
 }
 .about-section p {
   line-height: 2rem;
