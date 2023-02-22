@@ -6,9 +6,8 @@ import useHttp from '../hooks/http';
 
 const CocktailList = () => {
 	const [cocktails, setCocktails] = useState([]);
-	const [isInitial, setIsInitial] = useState(true);
 	const { sendRequest, isLoading } = useHttp();
-	const { searchTerm, setSearchTerm } = useGlobalContext();
+	const { searchTerm } = useGlobalContext();
 
 	const doAfterResponse = useCallback((data) => {
 		if (data.drinks) {
@@ -21,24 +20,26 @@ const CocktailList = () => {
 	
 
 	useEffect(() => {
-		const reqDelay = setTimeout(() => {
-			sendRequest(
-				{ url: `search.php?s=${searchTerm}`, type: 'search' },
-				doAfterResponse
-			);
-		}, 300);
+    let reqDelay 
+    if(searchTerm) {
+      reqDelay = setTimeout(() => {
+        sendRequest(
+          { url: `search.php?s=${searchTerm}`, type: 'search' },
+          doAfterResponse
+        );
+      }, 300);
+    } else {
+      sendRequest(
+        { url: `search.php?s=`, type: 'search' },
+        doAfterResponse
+      );
+    }
+		
 		return () => {
 			clearTimeout(reqDelay);
 		};
 	}, [searchTerm, sendRequest, setCocktails, doAfterResponse]);
 
- useEffect(() => {
-  setIsInitial(true)
-  return () => {
-    setIsInitial(false)
-    setSearchTerm('')
-  };
- }, [setSearchTerm]);
 
 	if (isLoading) {
 		return <Loading />;
@@ -51,7 +52,7 @@ const CocktailList = () => {
 				{cocktails.map((cocktail) => (
 					<Cocktail key={cocktail.idDrink} {...cocktail} />
 				))}
-				{!cocktails.length && !isInitial && <h3>no cocktails for this term</h3>}
+				{!cocktails.length && <h3>no cocktails for this term</h3>}
 			</div>
 		</section>
 	);
