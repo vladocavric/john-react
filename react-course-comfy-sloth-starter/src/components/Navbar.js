@@ -9,7 +9,37 @@ import { useProductsContext } from '../context/products_context'
 import { useUserContext } from '../context/user_context'
 
 const Nav = () => {
-  return <h4>navbar</h4>
+  const { openSidebar } = useProductsContext();
+  const handleClick = () => {
+		openSidebar();
+  };
+  return (
+		<NavContainer>
+			<div className='nav-center'>
+				<div className='nav-header'>
+					<Link to='/'>
+						<img src={logo} alt='logo' />
+					</Link>
+					<button
+						type='button'
+						className='nav-toggle'
+						onClick={handleClick}>
+						<FaBars />
+					</button>
+				</div>
+
+				<ul className='nav-links'>
+					{links.map(({ id, text, url }) => (
+						<li key={id}>
+							<Link to={url}>{text}</Link>
+						</li>
+					))}
+				</ul>
+
+				<CartButtons />
+			</div>
+		</NavContainer>
+  );
 }
 
 const NavContainer = styled.nav`

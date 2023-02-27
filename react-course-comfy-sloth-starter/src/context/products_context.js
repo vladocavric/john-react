@@ -15,15 +15,32 @@ import {
 
 const initialState = {}
 
-const ProductsContext = React.createContext()
+const ProductsContext = React.createContext({
+	showSidebar: false,
+	openSidebar: () => {},
+	closeSidebar: () => {},
+});
 
 export const ProductsProvider = ({ children }) => {
-  return (
-    <ProductsContext.Provider value='products context'>
-      {children}
-    </ProductsContext.Provider>
-  )
-}
+	const [state, dispatch] = useReducer(reducer, initialState);
+	const openSidebar = () => {
+		dispatch({ type: 'SIDEBAR_OPEN' });
+	};
+	const closeSidebar = () => {
+		dispatch({ type: 'SIDEBAR_CLOSE' });
+	};
+
+	return (
+		<ProductsContext.Provider
+			value={{
+				showSidebar: state.showSidebar,
+				openSidebar,
+				closeSidebar,
+			}}>
+			{children}
+		</ProductsContext.Provider>
+	);
+};
 // make sure use
 export const useProductsContext = () => {
   return useContext(ProductsContext)
