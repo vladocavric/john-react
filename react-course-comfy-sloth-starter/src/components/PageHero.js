@@ -1,9 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom';
 const PageHero = () => {
-  return <h4>page hero</h4>
-}
+	const { pathname } = useLocation();
+	return (
+		<Wrapper>
+			<div className='section-center'>
+				<h3>
+					<Link to='/'>Home</Link> / {pathname.substring(1)}
+				</h3>
+			</div>
+		</Wrapper>
+	);
+};
 
 const Wrapper = styled.section`
   background: var(--clr-primary-10);

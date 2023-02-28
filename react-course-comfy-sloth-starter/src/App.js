@@ -14,18 +14,21 @@ function App() {
 		<Router>
 			<Navbar />
 			<Sidebar />
-			<Routes>
-				<Route path='/'>
-					<Route index element={<HomePage />} />
-					<Route path='/about' element={<AboutPage />} />
-					<Route path='/products'>
-						<Route index element={<ProductsPage />} />
-						<Route path=':id' element={<SingleProductPage />} />
+			<main>
+				<Routes>
+					<Route path='/'>
+						<Route index element={<HomePage />} />
+						<Route path='/about' element={<AboutPage />} />
+						<Route path='/products'>
+							<Route index element={<ProductsPage />} />
+							<Route path=':id' element={<SingleProductPage />} />
+						</Route>
+						<Route path='/cart' element={<CartPage />} />
+						<Route path='*' element={<ErrorPage />} />
 					</Route>
-					<Route path='/cart' element={<CartPage />} />
-					<Route path='*' element={<ErrorPage />} />
-				</Route>
-			</Routes>
+				</Routes>
+			</main>
+			<Footer />
 		</Router>
 	);
 }
