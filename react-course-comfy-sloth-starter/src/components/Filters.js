@@ -49,7 +49,7 @@ const Filters = () => {
 					<div className='form-control'>
 						<h5>Company</h5>
 						<select name='company' className='company'>
-							<option value='all' default>
+							<option value='all' selected>
 								all
 							</option>
 							<option value='marcos'>marcos</option>
