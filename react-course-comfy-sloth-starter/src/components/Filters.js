@@ -5,11 +5,23 @@ import { getUniqueValues, formatPrice } from '../utils/helpers';
 import { FaCheck } from 'react-icons/fa';
 
 const Filters = () => {
+	const [value, setValue] = React.useState('all');
+	const handleSubmit = (e) => {
+		e.preventDefault();
+	};
+
+	const handleChangeCompany = (e) => {
+		console.log(e.target.value);
+		setValue(e.target.value);
+	};
+	const handlePriceRangeChange = (e) => {
+		console.log(e.target.value);
+	};
+
 	return (
 		<Wrapper>
-			<FaCheck />
 			<div className='content'>
-				<form>
+				<form onSubmit={handleSubmit}>
 					<div className='form-control'>
 						<input
 							type='text'
@@ -48,10 +60,12 @@ const Filters = () => {
 					</div>
 					<div className='form-control'>
 						<h5>Company</h5>
-						<select name='company' className='company'>
-							<option value='all' selected>
-								all
-							</option>
+						<select
+							name='company'
+							className='company'
+							value={value}
+							onChange={handleChangeCompany}>
+							<option value='all'>all</option>
 							<option value='marcos'>marcos</option>
 							<option value='liddy'>liddy</option>
 							<option value='ikea'>ikea</option>
@@ -67,7 +81,7 @@ const Filters = () => {
 							<button
 								name='color'
 								className='color-btn red'
-								dataColor='#ff0000'
+								datacolor='#ff0000'
 							/>
 							<button name='color' className='color-btn green' />
 							<button name='color' className='color-btn blue' />
@@ -88,6 +102,7 @@ const Filters = () => {
 							//todo: value programmatically
 							value='50'
 							id='myRange'
+							onChange={handlePriceRangeChange}
 						/>
 					</div>
 					<div className='form-control shipping'>

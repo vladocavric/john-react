@@ -10,6 +10,12 @@ import {
 } from '../actions'
 
 const filter_reducer = (state, action) => {
+  if (action.type === SET_GRID_VIEW) {
+		return { ...state, gridView: true };
+  }
+  if (action.type === SET_LIST_VIEW) {
+		return { ...state, gridView: false };
+  }
   return state
   throw new Error(`No Matching "${action.type}" - action type`)
 }
