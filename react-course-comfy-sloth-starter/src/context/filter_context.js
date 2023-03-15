@@ -12,7 +12,7 @@ import {
 } from '../actions';
 import { useProductsContext } from './products_context';
 
-const initialState = { gridView: false };
+const initialState = { gridView: true };
 
 const FilterContext = React.createContext({
 	products: [],

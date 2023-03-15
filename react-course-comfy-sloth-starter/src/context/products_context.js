@@ -12,21 +12,25 @@ import {
 	GET_SINGLE_PRODUCT_SUCCESS,
 	GET_SINGLE_PRODUCT_ERROR,
 } from '../actions';
+import { type } from '@testing-library/user-event/dist/type';
 
 const initialState = {
 	products: [],
 	error: '',
 	isLoading: true,
 	showSidebar: false,
+	singleProduct: {},
 };
 
 const ProductsContext = React.createContext({
 	showSidebar: false,
 	openSidebar: () => {},
 	closeSidebar: () => {},
+	getSingleProduct: () => {},
 	products: [],
 	error: '',
 	isLoading: true,
+	singleProduct: {},
 });
 
 export const ProductsProvider = ({ children }) => {
@@ -36,6 +40,16 @@ export const ProductsProvider = ({ children }) => {
 	};
 	const closeSidebar = () => {
 		dispatch({ type: SIDEBAR_CLOSE });
+	};
+
+	const getSingleProduct = async (url) => {
+		dispatch({ type: GET_SINGLE_PRODUCT_BEGIN });
+		try {
+			const { data } = await axios.get(url);
+			dispatch({ type: GET_SINGLE_PRODUCT_SUCCESS, singleProduct: data });
+		} catch (error) {
+			dispatch({ type: GET_SINGLE_PRODUCT_ERROR });
+		}
 	};
 
 	useEffect(() => {
@@ -59,7 +73,9 @@ export const ProductsProvider = ({ children }) => {
 				showSidebar: state.showSidebar,
 				openSidebar,
 				closeSidebar,
+				getSingleProduct,
 				products: state.products,
+				singleProduct: state.singleProduct,
 				error: state.error,
 				isLoading: state.isLoading,
 			}}>
