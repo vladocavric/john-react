@@ -6,17 +6,35 @@ import { useCartContext } from '../context/cart_context';
 import AmountButtons from './AmountButtons';
 
 const AddToCart = ({ colors }) => {
-	console.log(colors);
+	const [selected, setSelected] = useState('');
+	const [amount, setAmount] = useState(1);
+	const handleSelect = (color) => {
+		setSelected(color);
+	};
 	return (
 		<Wrapper>
 			<div className='colors'>
 				<span>colors : </span>
 				<div>
 					{colors.map((color) => (
-						<button key={color} className='color-btn'></button>
+						<button
+							key={color}
+							className={`color-btn ${
+								color === selected ? 'active' : ''
+							}`}
+							onClick={() => handleSelect(color)}
+							style={{ backgroundColor: color }}>
+							{color === selected && <FaCheck />}
+						</button>
 					))}
 				</div>
-			</div>{' '}
+			</div>
+			<div className='btn-container'>
+				<AmountButtons amount={amount} setAmount={setAmount} />
+				<Link to='/cart' className='btn'>
+					add to cart
+				</Link>
+			</div>
 		</Wrapper>
 	);
 };

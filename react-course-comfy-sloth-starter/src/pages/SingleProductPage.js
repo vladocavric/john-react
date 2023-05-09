@@ -59,14 +59,14 @@ const SingleProductPage = () => {
 							<h5 className='price'>{formatPrice(price)}</h5>
 							<p className='desc'>{description}</p>
 							<p className='info'>
-								<span>Available: </span>
+								<span>Available : </span>
 								{stock > 0 ? 'in stock' : 'not in stock'}
 							</p>
 							<p className='info'>
-								<span>SKU:</span> {id}
+								<span>SKU :</span> {id}
 							</p>
 							<p className='info'>
-								<span>Brand:</span>
+								<span>Brand :</span>
 								{company}
 							</p>
 							<hr />
