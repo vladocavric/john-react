@@ -1,7 +1,11 @@
-import React from 'react'
+import React from 'react';
 
 const Loading = () => {
-  return <h4>loading element</h4>
-}
+	return (
+		<div>
+			<div id='circle2'></div>
+		</div>
+	);
+};
 
-export default Loading
+export default Loading;
